@@ -1,0 +1,35 @@
+form{
+
+    display: flex;
+    flex-direction: column;
+
+    input{
+        height: 50px;
+        border-radius: 0px !important;
+    }
+    
+    label{
+        font-weight: bold;
+        font-size: 1.16rem;
+    }
+
+    label::after{
+        content: ' *';
+        color: rgb(255, 213, 0);
+    }
+
+}
+
+.signIn-active{
+    display: block !important;
+}
+
+.signUp-active{
+    display: block !important;
+}
+
+.active{
+    color: #0d6efc !important;
+    border-bottom: ;
+    transition:all 0.2s ease;
+}
