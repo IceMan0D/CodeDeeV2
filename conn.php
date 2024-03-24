@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbName = "dd";  //database name
+$dbName = "dataset_code_lastest";  //database name
 
 try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbName", $username, $password);

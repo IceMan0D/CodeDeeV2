@@ -2,7 +2,6 @@
 session_start();
 require_once 'conn.php';
 
-// เมื่อผู้ใช้เข้าสู่ระบบแล้ว
 if (isset($_POST['update'])) {
     $user_id = $_SESSION['user_login'];
     $user_fullname = $_POST['user_fullname'];
@@ -11,21 +10,20 @@ if (isset($_POST['update'])) {
     $tel = $_POST['tel'];
     $occupation = $_POST['occupation'];
     $detail = $_POST['detail'];
+    $profile = isset($_FILES['profile']) ? $_FILES['profile']['name'] : null;
 
-    // เตรียมคำสั่ง SQL สำหรับการอัปเดตข้อมูล
     $sql = "UPDATE user 
-                SET user_fullname = :user_fullname, 
-                    user_email = :user_email, 
-                    user_address = :user_address, 
-                    tel = :tel, 
-                    occupation = :occupation, 
-                    detail = :detail 
-                WHERE user_id = :user_id";
+            SET user_fullname = :user_fullname, 
+                user_email = :user_email, 
+                user_address = :user_address, 
+                tel = :tel, 
+                occupation = :occupation, 
+                detail = :detail,
+                profile = :profile
+            WHERE user_id = :user_id";
 
-    // เตรียมและเริ่มการใช้งาน PDO
     $stmt = $conn->prepare($sql);
 
-    // ผูกค่า parameter
     $stmt->bindParam(':user_fullname', $user_fullname, PDO::PARAM_STR);
     $stmt->bindParam(':user_email', $user_email, PDO::PARAM_STR);
     $stmt->bindParam(':user_address', $user_address, PDO::PARAM_STR);
@@ -33,22 +31,33 @@ if (isset($_POST['update'])) {
     $stmt->bindParam(':occupation', $occupation, PDO::PARAM_STR);
     $stmt->bindParam(':detail', $detail, PDO::PARAM_STR);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->bindParam(':profile', $profile, PDO::PARAM_STR);
 
-    // ประมวลผลคำสั่ง SQL
     $stmt->execute();
 
-    // ส่งกลับไปยังหน้าเดิมหลังจากอัปเดตข้อมูลเรียบร้อย
     header("location: user.php");
-    exit; // ออกจากการทำงานทันทีหลังจาก redirect
+    exit;
 }
 
-// ดึงข้อมูลของผู้ใช้จากฐานข้อมูลเพื่อให้แสดงในฟอร์ม
 $user_id = $_SESSION['user_login'];
 $stmt = $conn->prepare("SELECT * FROM user WHERE user_id = :user_id");
-$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt->bindParam(':user_id', $user_id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) {
+    $dir = "upload/";
+    $fileImage = $dir . basename($_FILES['profile']['name']);
+
+    if (move_uploaded_file($_FILES['profile']['tmp_name'], $fileImage)) {
+        //echo File uploaded successfully;
+    } else {
+        // Failed to upload file
+        echo "Failed to upload file.";
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,12 +65,16 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Edit User Information</title>
 
     <!-- bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
     <!-- bootstarp icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -78,24 +91,28 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <div class="container user-info w-75 Regular shadow p-5 rounded-5" style="max-width: 600px;">
         <div class="row">
-            <div class="col-12 img-content">
-                <img src="images/mobiledev.png" alt="profile" id="image-profile">
-            </div>
-            <div class="col-12 info-content mt-5">
-                <form method="post" action="">
+            <form method="post" action="" enctype="multipart/form-data">
+                <div class="col-12 img-content">
+                    <img src="uploads/<?php echo $row['profile']; ?>" alt="profile" id="image-profile">
+                </div>
+                <div class="col-12 info-content mt-5">
+
                     <div class="box">
-                        <label for="user_fullname" >Full Name</label>
-                        <input type="text" id="user_fullname" name="user_fullname" value="<?php echo $row['user_fullname']; ?>" required><br>
+                        <label for="user_fullname">Full Name</label>
+                        <input type="text" id="user_fullname" name="user_fullname"
+                            value="<?php echo $row['user_fullname']; ?>" required><br>
                     </div>
 
                     <div class="box">
                         <label for="user_email">Email</label>
-                        <input type="email" id="user_email" name="user_email" value="<?php echo $row['user_email']; ?>" required><br>
+                        <input type="email" id="user_email" name="user_email" value="<?php echo $row['user_email']; ?>"
+                            required><br>
                     </div>
 
                     <div class="box">
                         <label for="user_address">Address</label>
-                        <input type="text" id="user_address" name="user_address" value="<?php echo $row['user_address']; ?>" required><br>
+                        <input type="text" id="user_address" name="user_address"
+                            value="<?php echo $row['user_address']; ?>" required><br>
                     </div>
 
                     <div class="box">
@@ -110,21 +127,25 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     <div class="box">
                         <label for="detail">Detail</label>
-                        <textarea id="detail" name="detail"><?php echo $row['detail']; ?></textarea>
+                        <textarea id="detail" name="detail">t<?php echo $row['detail']; ?></textarea>
                     </div>
 
-                    <div class="btn-container d-flex justify-content-end gap-3 mt-3">
-                    <input type="submit" value="cancel" class="btn btn-white shadow-sm">
-                    <input type="submit" name="update" value="Save Changes" class="btn btn-primary">
+                    <div class="box">
+                        <input type="file" id="image" name="profile">
                     </div>
-                    
-                </form>
-            </div>
+                    <div class="box">
+
+                        <div class="btn-container d-flex justify-content-end gap-3 mt-3">
+                            <input type="submit" value="cancel" class="btn btn-white shadow-sm">
+                            <input type="submit" name="update" value="Save Changes" class="btn btn-primary">
+                        </div>
+            </form>
         </div>
+    </div>
 
     </div>
 
-    <?php include 'footer.php'?>
+    <?php include 'footer.php' ?>
 </body>
 
 </html>

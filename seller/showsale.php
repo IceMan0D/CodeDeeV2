@@ -9,18 +9,19 @@ $offset = ($page - 1) * $perpage;
 
 // เรียกข้อมูลผู้ใช้
 $user_id = $_SESSION['sale_login'];
-$stmt_user = $conn->prepare('SELECT user_username FROM user WHERE user_id = :user_id');
+$stmt_user = $conn->prepare('SELECT * FROM user WHERE user_id = :user_id');
 $stmt_user->bindParam(':user_id', $user_id);
 $stmt_user->execute();
 $user = $stmt_user->fetch(PDO::FETCH_ASSOC);
 
 
+
 //echo $user['user_username'];
 
 // เรียกข้อมูลคอร์สที่ผู้ใช้คนนั้นเป็นผู้ขาย
-$stmt_course = $conn->prepare('SELECT course.*, user.user_username AS course_seller 
+$stmt_course = $conn->prepare('SELECT course.*, user.user_id AS course_seller 
                                FROM course 
-                               INNER JOIN user ON course.user_username = user.user_username 
+                               INNER JOIN user ON course.seller_id = user.user_id
                                WHERE user.user_id = :user_username');
 $stmt_course->bindParam(':user_username', $user_id);
 $stmt_course->execute();
@@ -55,7 +56,7 @@ $courses = $stmt_course->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-md-4">
 
                 <!-- cardtest -->
-                <div class="card " style="">
+                <div class="card ">
                     <img src="../img/course_img/<?php echo $course['course_img'] ?>" class="card-img-top"
                         alt="Course Image">
                     <div class="card-body">

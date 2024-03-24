@@ -5,7 +5,7 @@ require_once '../admin/check_permission.php';
 require_once('views/navbar.php');
 //session_start();
 $status = $_SESSION['sale_login'];
-$stmt = $conn->prepare('SELECT user_username FROM user WHERE user_id = :user_id');
+$stmt = $conn->prepare('SELECT user_id,user_username FROM user WHERE user_id = :user_id');
 $stmt->bindParam(':user_id', $status);
 $stmt->execute();
 $user_name = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -22,7 +22,7 @@ $description = '';
 $suitable = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $course_name = htmlspecialchars($_POST['course_name']);
+   // $course_name = htmlspecialchars($_POST['course_name']);
     $course_name = htmlspecialchars($_POST['course_name']);
     $course_price = htmlspecialchars($_POST['course_price']);
     $course_detail = htmlspecialchars($_POST['course_detail']);
@@ -71,27 +71,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // หากไม่มี error แล้วถึงจะ insert
     if (empty($errors)) {
         $sql_insert = 'INSERT INTO course (user_username,course_name, course_img ,course_price, 
-                            course_detail, course_example, type_id ,requirements , description, suitable_for) 
-                            VALUES (:user_name,:course_name, :course_img ,:course_price, :course_detail,
-                            :course_example, :course_type ,:requirement, :description, :suitable)';
+                    course_detail, course_example, type_id ,requirements ,description, suitable_for,seller_id) 
+                    VALUES (:user_name,:course_name, :course_img ,:course_price, :course_detail,
+                    :course_example, :course_type ,:requirement, :description, :suitable, :user_id)';
 
-        $stmt = $conn->prepare($sql_insert);
+$stmt = $conn->prepare($sql_insert);
 
-        $stmt->execute(
-            array(
-                //  ':user_name', $user_name,
-                ':user_name' => $user_name['user_username'],
-                ':course_name' => $course_name,
-                ':course_img' => $file_name,
-                ':course_price' => $course_price,
-                ':course_detail' => $course_detail,
-                ':course_example' => $course_example,
-                ':course_type' => $course_type,
-                ':requirement' => $requirement,
-                ':description' => $description,
-                ':suitable' => $suitable
-            )
-        );
+$stmt->execute(
+    array(
+        ':user_name' => $user_name['user_username'],
+        ':course_name' => $course_name,
+        ':course_img' => $file_name,
+        ':course_price' => $course_price,
+        ':course_detail' => $course_detail,
+        ':course_example' => $course_example,
+        ':course_type' => $course_type,
+        ':requirement' => $requirement,
+        ':description' => $description,
+        ':suitable' => $suitable,
+        ':user_id' => $user_name['user_id']
+    )
+);
+
 
         // ประกาศตัวแปร บอกว่า เพิ่มส้นค้าสำเร็จ
         $message = 'เพิ่มสินค้าสำเร็จ';
