@@ -35,7 +35,7 @@
 
 <?php 
 	session_start();
-	if ($_SESSION["user_id"] ==Null) {
+	if ($_SESSION["admin_login"] ==Null) {
 		session_destroy();
   ?>
 
@@ -48,7 +48,6 @@
 
   }
 ?>
-
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -190,10 +189,10 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <?php
-                            $user_id  =$_SESSION["user_id"];
+                            $user_id  =$_SESSION["admin_login"];
                             $rsud = $conn->query("select * from user where user_id = '$user_id'");
                             foreach($rsud as $row){
-                                $img = $row ['img'];
+                                $img = $row ['profile'];
                             }
                         ?>
                         <!-- Nav Item - User Information -->
@@ -202,12 +201,12 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION["status_name"];?> : <?php echo $_SESSION["user_fullname"];?></span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/profile/<?php echo $img;?> ">
+                                    src="../images/profile/<?php echo $img;?> ">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="profile.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
