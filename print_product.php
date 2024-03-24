@@ -91,10 +91,10 @@ if (isset($_SESSION['user_login'])) {
                             echo "<td>" . $subtotal . "</td>";
                             // echo $user_id;
 
-                            $sql_sale = "SELECT payment_status_id, insert_img FROM sale WHERE user_id = :user_id AND coures_id = :coures_id ";
+                            $sql_sale = "SELECT payment_status_id, insert_img FROM sale WHERE user_id = :user_id AND course_id = :course_id ";
                             $stmt2 = $conn->prepare($sql_sale);
                             $stmt2->bindParam(':user_id', $_SESSION['user_login']);
-                            $stmt2->bindParam(':coures_id', $row['course_id']);
+                            $stmt2->bindParam(':course_id', $row['course_id']);
                             $stmt2->execute();
                             $sale_rows = $stmt2->fetch(PDO::FETCH_ASSOC);
                             $status = isset($sale_rows['payment_status_id']) ? $sale_rows['payment_status_id'] : '';

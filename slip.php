@@ -42,7 +42,7 @@
     //     exit(); // ออกจากสคริปต์
     // }
 
-    $sql = 'SELECT name_img FROM sale WHERE user_id = :user_id AND coures_id = :product_product';
+    $sql = 'SELECT name_img FROM sale WHERE user_id = :user_id AND course_id = :product_product';
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':user_id',$user);
     $stmt->bindParam(':product_product',$productId);
