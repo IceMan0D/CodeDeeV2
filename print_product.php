@@ -22,10 +22,13 @@ if (isset($_SESSION['user_login'])) {
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Document</title>
 
-      <!-- bootstrap -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+
     <!-- bootstarp icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -91,10 +94,10 @@ if (isset($_SESSION['user_login'])) {
                             echo "<td>" . $subtotal . "</td>";
                             // echo $user_id;
 
-                            $sql_sale = "SELECT payment_status_id, insert_img FROM sale WHERE user_id = :user_id AND coures_id = :coures_id ";
+                            $sql_sale = "SELECT payment_status_id, insert_img FROM sale WHERE user_id = :user_id AND course_id = :course_id ";
                             $stmt2 = $conn->prepare($sql_sale);
                             $stmt2->bindParam(':user_id', $_SESSION['user_login']);
-                            $stmt2->bindParam(':coures_id', $row['course_id']);
+                            $stmt2->bindParam(':course_id', $row['course_id']);
                             $stmt2->execute();
                             $sale_rows = $stmt2->fetch(PDO::FETCH_ASSOC);
                             $status = isset($sale_rows['payment_status_id']) ? $sale_rows['payment_status_id'] : '';

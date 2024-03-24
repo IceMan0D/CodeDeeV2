@@ -17,7 +17,7 @@
         if(move_uploaded_file($_FILES["namepic"]["tmp_name"], $fileimage1)){
             // echo "ไฟล์ภาพชื่อ ". basename($_FILES["namepic"]["name"] ). " อัพโหลดแล้ว";
             
-            $sql = 'INSERT INTO sale (user_id, coures_id, sale_paid, insert_img, name_img, payment_status_id) VALUES (:user_id, :course_id, :sale_paid, :insert_img, :name_img, :paymet_status_id)';
+            $sql = 'INSERT INTO sale (user_id, course_id, sale_paid, insert_img, name_img, payment_status_id) VALUES (:user_id, :course_id, :sale_paid, :insert_img, :name_img, :paymet_status_id)';
             $stmt = $conn->prepare($sql);
             $stmt->execute(
                 array(
