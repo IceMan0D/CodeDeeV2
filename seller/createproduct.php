@@ -1,6 +1,5 @@
 <?php
 //session_start();
-// เดี๋ยวมาเเก้ให้นะเจ๋ง 
 require_once '../conn.php';
 require_once '../admin/check_permission.php';
 require_once('views/navbar.php');
@@ -69,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[] = 'กรุณาอัพโหลดไฟล์ภาพ';
     }
 
-        // หากไม่มี error แล้วถึงจะ insert
-        if(empty($errors)){
-            $sql_insert = 'INSERT INTO course (user_username,course_name, course_img ,course_price, 
+    // หากไม่มี error แล้วถึงจะ insert
+    if (empty($errors)) {
+        $sql_insert = 'INSERT INTO course (user_username,course_name, course_img ,course_price, 
                             course_detail, course_example, type_id ,requirements , description, suitable_for) 
                             VALUES (:user_name,:course_name, :course_img ,:course_price, :course_detail,
                             :course_example, :course_type ,:requirement, :description, :suitable)';
@@ -113,8 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php
 //เพิ่มส่วน header ของ html และ แถบเมนูด้านบน
 $title = 'ลงคอร์ส';
- //include_once '../Codee/admin/views/partials/header.php';
- //include_once 'navbarsaller.php';
+//include_once '../Codee/admin/views/partials/header.php';
+//include_once 'navbarsaller.php';
 
 ?>
 
@@ -140,7 +139,7 @@ $title = 'ลงคอร์ส';
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <?php foreach ($errors as $error) : ?>
             <p><?php
-                       
+
                         echo $error ?></p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <?php endforeach; ?>
@@ -169,8 +168,7 @@ $title = 'ลงคอร์ส';
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">ชื่อผู้ขาย</label>
-                <input type="text" class="form-control" id="" value="<?php echo $user_name['user_username']; ?>"
-                    name="user_name">
+                <p class="fw-bold"><?php echo $user_name['user_username']; ?></p>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">ราคา</label>
@@ -239,6 +237,7 @@ $title = 'ลงคอร์ส';
             <a href="list_product.php" class="btn btn-danger">ยกเลิก</a>
         </form>
     </div>
+    <?php include "views/footer.php" ?>
 </body>
 
 </html>
