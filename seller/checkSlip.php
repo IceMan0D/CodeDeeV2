@@ -2,35 +2,37 @@
 
     require_once('../conn.php');
     require_once('../admin/check_permission.php');
+    $title = 'ตรวจสลิป';
     include_once('views/head.php');
     include_once('views/navbar.php');
 
 ?>
 
 <?php
-    
-    // $sql = 'SELECT user.user_username, course.course_id, sale_paid, name_img 
-    //         FROM sale 
-    //         INNER JOIN course 
-    //         ON sale.user_id = course.user_username'
+
     
     $user_id = $_SESSION['sale_login'];
-    // $stmt_course = $conn->prepare('SELECT course.*, user.user_username,
-    //                            FROM course 
-    //                            INNER JOIN user ON course.user_username = user.user_username
-    //                            WHERE user.user_id = :user_id');
-    
-    // แสดงคอสที่ตัวเองขาย 
-    $stmt_course = $conn->prepare('SELECT *
+
+    $sql_fullname = $conn->prepare('SELECT course.user_username
+                                    FROM course 
+                                    INNER JOIN user ON user.user_username = course.user_username
+                                    WHERE user.user_id = :user_id');
+    $sql_fullname->bindParam(':user_id', $user_id);
+    $sql_fullname->execute();
+    $row_fullname = $sql_fullname->fetch(PDO::FETCH_ASSOC);
+    $username = $row_fullname['user_username'];
+
+    $stmt_course = $conn->prepare('SELECT course.course_name, user.user_fullname, sale.sale_paid, sale.name_img, sale.payment_status_id, sale.sale_id
                                 FROM sale
-                                INNER JOIN course 
-                                ON course.course_id = sale.course_id');
-    // $stmt_course->bindParam(':user_id', $user_id);
+                                INNER JOIN course ON course.course_id = sale.course_id
+                                INNER JOIN user ON user.user_id = sale.user_id
+                                WHERE course.user_username = :user_id');
+                                
+    $stmt_course->bindParam(':user_id', $username, PDO::PARAM_STR);
     $stmt_course->execute();
     $courses = $stmt_course->fetchAll(PDO::FETCH_ASSOC);
-    echo '<pre>';
-    var_dump($courses);
-    echo '</pre>';
+
+
 ?>
 
 <body>
@@ -38,40 +40,37 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">ลำดับที</th>
+                    <th scope="col">ลำดับที่</th>
                     <th scope="col">บทเรียน</th>
                     <th scope="col">ผู้ซื้อ</th>
                     <th scope="col">ราคา</th>
-                    <th scope="col">ภาพ</th>
                     <th scope="col">สถานะ</th>
+                    <th scope="col">ภาพ</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($courses as $i => $course):?>
+                <?php foreach($courses as $i => $course): ?>
                 <tr>
                     <th scope="row"><?php echo $i+1 ?></th>
                     <td><?php echo $course['course_name']?></td>
-                    <td><?php echo 'test'; ?></td>
-                    <td><?php echo $course['course_price']?> </td>
-                    <td><?php echo $course['course_price']?> </td>
+                    <td><?php echo $course['user_fullname']; ?></td>
+                    <td><?php echo $course['sale_paid']?> </td>
                     <td>
-                        <form>
-                            <input type="hidden" value="3" name="payment_status">
-                            <input type="submit" value="ยืนยันการชำระเงิน" name="submit">
-                        </form>
+                        <?php 
+                            if($course['payment_status_id'] == 2){
+                                echo '<p style="color:red;">รอยืนยันจากผู้ขาย</p>';
+                            }else { 
+                                echo '<p style="color:green;">ชำระเงินเรียบร้อย</p>';
+                            }
+                        ?>
+                    </td>
+                    <td><img src="../img/course_img/<?php echo $course['name_img']?>" alt="" width="100px"></td>
+                    <td>
+                        <a href="updateSlip.php?sale_id=<?php echo $course['sale_id'];?>&value=3"
+                            class="btn btn-primary">ยืนยันการชำระเงิน</a>
                     </td>
                 </tr>
-                <?php endforeach; ?> <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
