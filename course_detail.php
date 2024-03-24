@@ -1,16 +1,12 @@
 <?php
 session_start();
 require_once 'conn.php';
-$sql = 'SELECT * FROM course 
-        INNER JOIN type ON course.type_id = type.type_id
-        INNER JOIN course_content ON course.course_id = course_content.course_id
-        INNER JOIN type_course_content ON course_content.type_course_content_id = type_course_content.type_course_content_id
-        WHERE type_course_content.type_content_name = "1" OR type_course_content.type_content_name = "2" OR type_course_content.type_content_name = "3"';
-
+$sql = "SELECT * FROM type_course_content WHERE type_content_id = :type_content_id";
 $stmt = $conn->prepare($sql);
+$stmt->bindParam(':type_content_id', $_GET['type_content_id']);
 $stmt->execute();
-$count = $stmt->rowCount();
-$course = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$type_content_name = $stmt->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -39,31 +35,45 @@ $course = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="col-md-6 p-4 ps-md-0">
             <h1>คอร์สเรียน</h1>
             <div class="accordion" id="accordionExample">
-                <?php foreach ($course as $course_item): ?>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse<?= $course_item['course_id'] ?>" aria-expanded="true"
-                                    aria-controls="collapse<?= $course_item['course_id'] ?>">
-                                <?php
-                                if ($course_item['type_content_name'] == "1") {
-                                    echo "บทนำ";
-                                } elseif ($course_item['type_content_name'] == "2") {
-                                    echo "ติดตั้งเครื่องมือพื้นฐาน";
-                                } elseif ($course_item['type_content_name'] == "3") {
-                                    echo "เนื้อหา";
-                                }
-                                ?>
-                            </button>
-                        </h2>
-                        <div id="collapse<?= $course_item['course_id'] ?>" class="accordion-collapse collapse show"
-                             data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <?= $course_item['course_content'] ?>
-                            </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <?php echo $type_content_name['type_content_name'] ?>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                         </div>
                     </div>
-                <?php endforeach; ?>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Accordion Item #2
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Accordion Item #3
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>
+                    </div>
+                </div>
             </div>
             <a href="#" class="stretched-link">Go somewhere</a>
         </div>

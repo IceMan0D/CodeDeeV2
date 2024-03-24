@@ -11,7 +11,7 @@
     $u_od = $_POST['u_od'];
 	$u_n = $_POST['u_n'];
 
-	$dir = "img/slip/";
+	$dir = "../images/bank/";
 	$fileimage1 = $dir . basename($_FILES["i_1"]["name"]);
 
 	$name1 =  basename($_FILES["i_1"]["name"]);

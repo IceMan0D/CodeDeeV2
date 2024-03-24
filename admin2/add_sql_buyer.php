@@ -8,7 +8,7 @@ $uid = $_POST['uid'];
 	$u_a = $_POST['u_a'];
 	$u_t = $_POST['u_t'];
 
-$rs = $conn->query("INSERT INTO user (user_username,user_password,user_fullname,user_email,user_address,tel,status_id,img) 
+$rs = $conn->query("INSERT INTO user (user_username,user_password,user_fullname,user_email,user_address,tel,status_id,profile) 
 VALUES ('$u_un','$u_p','$u_full','$u_e','$u_a','$u_t','3','profile-user.png')");
 
                     if($rs){

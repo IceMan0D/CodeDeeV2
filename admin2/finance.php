@@ -18,7 +18,7 @@
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 มีการซื้อขายเสร็จสิ้น</div>
                                                 <?php
-                                                $countseller = $conn->query("SELECT COUNT(*) AS total FROM sale WHERE payment_status_id = '3' and type_id != '5'");
+                                                $countseller = $conn->query("SELECT COUNT(*) AS total FROM sale WHERE payment_status_id = '3'and type_id != '5'");
                                                 $row = $countseller->fetch_assoc(); // หรือ fetch_array() ตามความต้องการ
                                                 $total = $row['total'];
                                                 ?>
@@ -142,7 +142,6 @@
                                             <th>ลำดับที่</th>
                                             <th>ชื่อคอร์ส</th>
                                             <th>ผู้ขาย</th>
-                                            <th>ความพึงพอใจ</th>
                                             <th>รายได้จาการขายคอร์ส</th>
                                             <th>ส่วนแบ่ง 30 %</th>
                                             <th>เครื่องมือ</th>
@@ -153,7 +152,6 @@
                                         <th>ลำดับที่</th>
                                             <th>ชื่อคอร์ส</th>
                                             <th>ผู้ขาย</th>
-                                            <th>ความพึงพอใจ</th>
                                             <th>รายได้จาการขายคอร์ส</th>
                                             <th>ส่วนแบ่ง 30 %</th>
                                             <th>เครื่องมือ</th>
@@ -167,39 +165,19 @@
                                         $rate_id = $row ['rate_id'];
                                         $income = $row ['income'];
                                         $per = $row ['30per'];
-                                        $course_seller = $row ['course_seller'];
+                                        $seller_id = $row ['seller_id'];
                                     ?>
                                     <tbody>
                                         <tr>
                                             <th scope="row"><?php echo $no;?></th>
                                             <th><?php echo $course_name;?></th>
                                             <?php
-                                                $rsu = $conn->query("select * from user where user_id ='$course_seller'");
+                                                $rsu = $conn->query("select * from user where user_id ='$seller_id'");
                                                 foreach($rsu as $row){
                                                     $user_username = $row ['user_username'];
                                                 }
                                             ?>
                                             <th><?php echo $user_username;?></th>
-                                            <?php
-                                                $rsr = $conn->query("select * from rate where rate_id ='$rate_id'");
-                                                foreach($rsr as $row){
-                                                    $average_score = $row ['average_score'];
-                                                    if($average_score<2){
-                                                        $color = "danger";
-                                                        $text = "แย่";
-                                                    }elseif($average_score>=2&&$average_score<3){
-                                                        $color = "warning";
-                                                        $text = "พอใช้";
-                                                    }elseif($average_score>=3&&$average_score<4){
-                                                        $color = "primary";
-                                                        $text = "ดี";
-                                                    }else{
-                                                        $color = "success";
-                                                        $text = "เยี่ยมมาก";
-                                                    }
-                                                }
-                                            ?>
-                                            <th><p class="float-right text-<?php echo $color;?>"><?php echo $average_score;?> <?php echo $text;?></p></th>
                                             <th><?php echo $income;?></th>
                                             <th><?php echo $per;?></th>
                                             <th>

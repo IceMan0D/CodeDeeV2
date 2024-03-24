@@ -23,7 +23,7 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 จำนวนบัญชีผู้ขายในระบบ</div>
                                                 <?php
-                                                $result = $conn->query("SELECT COUNT(*) AS totalA FROM user WHERE status_id = '2'");
+                                                $result = $conn->query("SELECT COUNT(*) AS totalA FROM user WHERE status_id = '2' or status_id = '1'");
                                                 $row = $result->fetch_assoc(); // หรือ fetch_array() ตามความต้องการ
                                                 $totalA = $row['totalA'];
                                                 ?>
@@ -50,7 +50,7 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 จำนวนผู้ที่มีการขายคอร์สในระบบ</div>
                                                 <?php
-                                                $countCourse = $conn->query("SELECT COUNT(DISTINCT course_seller) AS total FROM course");
+                                                $countCourse = $conn->query("SELECT COUNT(DISTINCT seller_id) AS total FROM course");
                                                 $row = $countCourse->fetch_assoc(); // หรือ fetch_array() ตามความต้องการ
                                                 $total = $row['total'];
                                                 ?>
@@ -124,7 +124,7 @@
                     </div>
 
                     <?php
-                        $rsu = $conn->query("select * from user where status_id = '2'");
+                        $rsu = $conn->query("select * from user where status_id = '2' or status_id = '1'");
                     ?>
 
 
@@ -172,7 +172,7 @@
                                             
                                             <th><?php echo $tel;?></th>
                                             <?php
-                                              $countCourse = $conn->query("SELECT COUNT(DISTINCT course_id) AS total FROM course WHERE course_seller = '$user_id'");
+                                              $countCourse = $conn->query("SELECT COUNT(DISTINCT course_id) AS total FROM course WHERE seller_id = '$user_id'");
                                               $row = $countCourse->fetch_assoc(); // หรือ fetch_array() ตามความต้องการ
                                               $total = $row['total'];
                                             ?>

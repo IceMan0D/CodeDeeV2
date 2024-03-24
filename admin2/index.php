@@ -53,7 +53,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             จำนวนผู้ขายในระบบ</div>
                                             <?php
-                                                $countseller = $conn->query("SELECT COUNT(*) AS total FROM user WHERE status_id = '2'");
+                                                $countseller = $conn->query("SELECT COUNT(*) AS total FROM user WHERE status_id = '2' or status_id='1'");
                                                 $row = $countseller->fetch_assoc(); // หรือ fetch_array() ตามความต้องการ
                                                 $total = $row['total'];
                                                 ?>
