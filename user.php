@@ -1,10 +1,5 @@
 
 <?php
-session_start();
-require_once 'conn.php';
-?>
-
-<?php
     session_start();
     require_once 'conn.php';
    // require_once'product_show.php'; 
@@ -59,7 +54,9 @@ if (!isset($_SESSION['user_login'])) {
             $row = $stmt->fetch();
         }
         ?>
+       
 
+        <img src="upload/<?php echo $row['profile']; ?>" alt="">
         <h3 class="mt-4">Welcome <?php echo $row['user_fullname']; ?></h3>
         <p>email: <?php echo $row['user_email']; ?></p>
         <p>address: <?php echo $row['user_address']; ?></p>
