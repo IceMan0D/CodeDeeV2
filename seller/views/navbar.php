@@ -30,7 +30,7 @@
                     <a class="nav-link" href="createproduct.php">เพิ่มสินค้า</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">ตรวจสลิป</a>
+                    <a class="nav-link" href="checkSlip.php">ตรวจสลิป</a>
                 </li>
 
             </ul>
