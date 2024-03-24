@@ -29,6 +29,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="createproduct.php">เพิ่มสินค้า</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="report.php">ผลตอบรับ</a>
+                </li>
 
             </ul>
         </div>

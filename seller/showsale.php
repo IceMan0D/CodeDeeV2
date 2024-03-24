@@ -1,5 +1,4 @@
 <?php
-
 require_once '../conn.php';
 require_once '../admin/check_permission.php';
 require_once('views/navbar.php');
@@ -55,25 +54,22 @@ $courses = $stmt_course->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="col-md-4">
 
-
                 <!-- cardtest -->
-                <div class="card M-3">
-                    <div class="card-image ">
-                        <img src="../img/course_img/<?php echo $course['course_img'] ?>" class="img-thumbnail"
-                            alt="...">
-                    </div>
+                <div class="card " style="">
+                    <img src="../img/course_img/<?php echo $course['course_img'] ?>" class="card-img-top"
+                        alt="Course Image">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $course['course_name'] ?></h5>
                         <p class="card-text"><?php echo $course['description'] ?></p>
                         <p class="card-text"><?php echo $course['course_price'] ?></p>
                         <a href="updateproduct.php?id=<?php echo $course['course_id']; ?>"
                             class="btn btn-primary">แก้ไข</a>
-                        <!-- ปุ่มลบ -->
-                        <a href="addpartsale.php?id=<?php echo $course['course_id']; ?>">
-                            <div class="btn btn-warning">เพิ่มบทเรียน</div>
-                        </a>
+                        <!-- Add Parts Sale Button -->
+                        <a href="addpartsale.php?id=<?php echo $course['course_id']; ?>"
+                            class="btn btn-warning">เพิ่มบทเรียน</a>
                     </div>
                 </div>
+
             </div>
 
             <?php } ?>
@@ -81,77 +77,23 @@ $courses = $stmt_course->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <div class='pagination d-flex justify-content-center mt-5'>
         <?php
-        $stmt = $conn->prepare('SELECT COUNT(*) as count FROM course');
-        $stmt->execute();
-        $total = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
-        $pages = ceil($total / $perpage);
+    $stmt = $conn->prepare('SELECT COUNT(*) as count FROM course');
+    $stmt->execute();
+    $total = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+    $pages = ceil($total / $perpage);
 
-        for ($i = 1; $i <= $pages; $i++) {
-            if ($i == $page) {
-                echo "<buttun class='btn btn-primary '>$i</buttun>";
-            } else {
-                echo "<a href='?page=$i'>$i</a>";
-            }
+    for ($i = 1; $i <= $pages; $i++) {
+        if ($i == $page) {
+            echo "<button class='btn btn-primary'>$i</button>";
+        } else {
+            echo "<a href='?page=$i' class='btn btn-outline-primary'>$i</a>";
         }
-        ?>
+    }
+    ?>
     </div>
-    <style>
-    .card-image img {
-        width: 100%;
-        /* Ensures the image fills its container */
-        height: auto;
-        /* Maintains aspect ratio */
-    }
 
-    .card {
-        padding: 20px;
-        width: 330px;
-        min-height: 370px;
-        border-radius: 20px;
-        background: #212121;
-        box-shadow: 5px 5px 8px #1b1b1b,
-            -5px -5px 8px #272727;
-        transition: 0.4s;
-    }
 
-    .card:hover {
-        translate: 0 -10px;
-    }
-
-    .card-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #b2eccf;
-        margin: 15px 0 0 10px;
-    }
-
-    .card-image {
-        min-height: 170px;
-        background-color: #313131;
-        border-radius: 15px;
-        background: #313131;
-        box-shadow: inset 5px 5px 3px #2f2f2f,
-            inset -5px -5px 3px #333333;
-    }
-
-    .card-body {
-        margin: 13px 0 0 10px;
-        color: rgb(184, 184, 184);
-        font-size: 15px;
-    }
-
-    .footer {
-        float: right;
-        margin: 28px 0 0 18px;
-        font-size: 13px;
-        color: #b3b3b3;
-    }
-
-    .by-name {
-        font-weight: 700;
-    }
-    </style>
-    <?php include "../CodeDee/footer.php" ?>
+    <?php include "views/footer.php" ?>
 </body>
 
 </html>

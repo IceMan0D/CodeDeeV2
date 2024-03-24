@@ -59,16 +59,16 @@ if (isset($_SESSION['user_login'])) {
                         <th>รหัสสินค้า</th>
                         <th>ชื่อสินค้า</th>
                         <th>ราคา</th>
-                        <th>จำนวน</th>
-                        <th>ราคารวม</th>
+                        <!-- <th>จำนวน</th> -->
+                        <!-- <th>ราคารวม</th> -->
                         <th>สถานะ</th>
                         <th>สลิปการโอน</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
-                    $totalPrice = 0; // Initialize total price
-
+                    /*
+                    $totalPrice = 100; // Initialize total price
                     for ($i = 0; $i <= (isset($_SESSION["intLine"]) ? (int)$_SESSION["intLine"] : 0); $i++) {
                         if (isset($_SESSION["strProductID"][$i]) && $_SESSION["strProductID"][$i] != "") {
                             // Fetch product details from database
@@ -127,15 +127,64 @@ if (isset($_SESSION['user_login'])) {
 
                             echo "</tr>";
                         }
-                    }
+                    }*/
                     ?>
+                    <?php
+                            $stmt = $conn->prepare('SELECT basket.basket_id, course.course_name, course.course_price, course.course_detail, course.course_id 
+                                                    FROM course
+                                                    INNER JOIN basket ON course.course_id = basket.course_id
+                                                    WHERE user_id = :user_id');
+                            $stmt->bindParam(':user_id', $_SESSION['user_login']);
+                            $stmt->execute();
+                            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            $count = $stmt->rowCount();
+                            // echo '<pre>';
+                            // var_dump($row);
+                            // echo '</pre>';
+                            // exit;
+                            $total = 0;
+                    ?>
+                    <?php foreach($row as $product): ?>
+                    <tr>
+                        <td><?php echo $product['course_id'];?></td>
+                        <td><?php echo $product['course_name'];?></td>
+                        <td><?php echo $product['course_price'];?></td>
+                        <?php
+                            $sql_sale = "SELECT payment_status_id, insert_img FROM sale WHERE user_id = :user_id AND course_id = :course_id ";
+                            $stmt2 = $conn->prepare($sql_sale);
+                            $stmt2->bindParam(':user_id', $_SESSION['user_login']);
+                            $stmt2->bindParam(':course_id', $product['course_id']);
+                            $stmt2->execute();
+                            $sale_rows = $stmt2->fetch(PDO::FETCH_ASSOC);
+                            $status = isset($sale_rows['payment_status_id']) ? $sale_rows['payment_status_id'] : '';
+                            $img = isset($sale_rows['insert_img']) ? $sale_rows['insert_img'] : '';
+                            echo "<td>";
+                            if($status  == 1){
+                                echo "<button type='button' class='btn btn-danger'>รอชำระเงิน</button>";
+                            } else if($status == 2){
+                                echo "<button type='button' class='btn btn-warning'>รอยืนยันจากผู้ขาย</button>";
+                            } else if($status == 3){
+                                echo "<button type='button' class='btn btn-success'>ชำระเงินเรียนร้อย</button>";
+                            } else { 
+                                echo "<button type='button' class='btn btn-danger'>รอชำระเงิน</button>";
+                            };
+                            echo "</td>";
+                            echo "<td>";
+                                if($img == 1){
+                                    echo "<a type='button' class='btn btn-success' href='slip.php?productId=".$product['course_id']."&price=".$product['course_price']."&user=".$_SESSION['user_login']."'>แนบแล้ว</a>";
+                                } else {
+                                    echo "<a type='button' class='btn btn-warning' href='slip.php?productId=".$product['course_id']."&price=".$product['course_price']."&user=".$_SESSION['user_login']."'>ยังไม่แนบ กดเพื่อแนบ</a>";
+                                }
+                            echo "</td>";?>
+                        <?php endforeach;?>
+                    </tr>
 
                     <!-- Display total price row -->
-                    <tr>
+                    <!-- <tr>
                         <td class="text-end" colspan="3">รวมเป็นเงิน</td>
-                        <td class="text-center" colspan="1"><?= $totalPrice ?></td>
+                        <td class="text-center" colspan="1"><?php //ehco $total ?></td>
                         <td>บาท</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
             <!-- Buttons for navigation -->
