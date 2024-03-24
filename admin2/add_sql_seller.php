@@ -1,6 +1,4 @@
 <?php require("connect_db.php");
-
-$uid = $_POST['uid'];
     $u_full = $_POST['u_full'];
 	$u_un = $_POST['u_un'];
 	$u_p = $_POST['u_p'];
@@ -12,12 +10,12 @@ $uid = $_POST['uid'];
     $u_od = $_POST['u_od'];
 	$u_n = $_POST['u_n'];
 
-	$dir = "img/slip/";
+    $dir = "../images/bank/";
 	$fileimage1 = $dir . basename($_FILES["i_1"]["name"]);
 
 	$name1 =  basename($_FILES["i_1"]["name"]);
 
-$rs = $conn->query("INSERT INTO user (user_username,user_password,user_fullname,user_email,user_address,tel,status_id,img,occupation,detail,number_banking,img_banking) 
+$rs = $conn->query("INSERT INTO user (user_username,user_password,user_fullname,user_email,user_address,tel,status_id,profile,occupation,detail,number_banking,img_banking) 
 VALUES ('$u_un','$u_p','$u_full','$u_e','$u_a','$u_t','2','profile-user.png','u_o','u_od','u_n','$name1')");
 
 if(move_uploaded_file($_FILES["i_1"]["tmp_name"],$fileimage1)){

@@ -91,9 +91,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text font-weight-bold text-info mb-1">รูปภาพสลิปโอนเงิน :
+                                <div class="text font-weight-bold text-info mb-1">รูปภาพ Qr-Code โอนเงิน :
                                     <br>
-                                    <img src="img/slip/<?php echo $img_banking;?>" width="15%" alt="">
+                                    <img src="../images/bank/<?php echo $img_banking;?>" width="15%" alt="">
                                 </div>
 
                             </div>

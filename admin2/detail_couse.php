@@ -42,27 +42,6 @@
         }
     ?>
 	<p class="card-text"><strong> ประเภทคอร์ส : <?php echo $type_name;?> </strong></p>
-    <?php
-        $rsr = $conn->query("select * from rate where rate_id ='$rate_id'");
-            foreach($rsr as $row){
-            $average_score = $row ['average_score'];
-            if($average_score<2){
-                $color = "danger";
-                $text = "แย่";
-            }elseif($average_score>=2&&$average_score<3){
-                $color = "warning";
-                $text = "พอใช้";
-            }elseif($average_score>=3&&$average_score<4){
-                $color = "primary";
-                $text = "ดี";
-            }else{
-                $color = "success";
-                $text = "เยี่ยมมาก";
-            }
-        }
-    ?>
-    <p class="card-text"><strong>คะแนน : <?php echo $average_score;?> คะแนน</strong></p>
-	<p class="card-text text-<?php echo $color;?>"><strong> <?php echo $text;?> </strong></p>
     <p class="card-text"><strong>ทั้งคอร์สได้รับเงิน : <?php echo $income;?> บาท</strong></p>
     <p class="card-text"><strong>แบ่งเปอร์เซนต์ 30% ได้รับเงิน : <?php echo $per;?> บาท</strong></p>
 

@@ -8,7 +8,7 @@ $uid = $_POST['uid'];
 	$u_a = $_POST['u_a'];
 	$u_t = $_POST['u_t'];
 
-$rs = $conn->query("update user set user_fullname = '$u_full',user_username = '$u_un',user_username = '$u_p',user_username = '$u_e',user_username = '$u_a',user_username = '$u_t'
+$rs = $conn->query("update user set user_fullname = '$u_full',user_username = '$u_un',user_password = '$u_p',user_email = '$u_e',user_address = '$u_a',tel = '$u_t'
 					where user_id   = '$uid'");
 
                     if($rs){
