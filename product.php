@@ -100,14 +100,14 @@ $course = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <span class="green box"></span>
                             </div>
                         </div>
-                        <div  class="card__content ">
+                        <div class="card__content ">
                             <a href="course_detail.php?course_id=<?php echo $i['course_id'] ?>"
                                 class="position-absolute w-100 h-100 top-0 left-0"></a>
                             <img src="img/course_img/<?php echo $i['course_img'] ?>" alt="" class="w-100"
                                 style="height: 180px;">
                             <div class="product-detail p-3">
                                 <h4><?php echo $i['course_name'] ?></h4>
-                                <p class="course-desc"><?php echo $i['description'] ?></p>
+                                <p class="course-desc"><?php echo $i['course_detail'] ?></p>
                                 <div class="info d-flex justify-content-between">
                                     <p class="price text-danger my-auto"><?php echo $i['course_price'] ?>฿</p>
                                     <form action="order.php" method="post">
