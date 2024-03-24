@@ -86,7 +86,7 @@
 
                     <button data-quantity="0" class="btn-cart me-3 d-none d-lg-block">
                         <a href="cart_2.php" class="btn-cart me-3 d-none d-lg-block">
-                            <svg class="icon-cart" viewBox="0 0 24.38 30.52" height="15" width="15"
+                            <svg class="icon-cart " viewBox="0 0 24.38 30.52" height="15" width="15"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <title>icon-cart</title>
                                 <path transform="translate(-3.62 -0.85)"
