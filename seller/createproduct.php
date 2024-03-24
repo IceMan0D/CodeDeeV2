@@ -1,9 +1,9 @@
 <?php
 //session_start();
-require_once '../conn.php';
 // เดี๋ยวมาเเก้ให้นะเจ๋ง 
-require_once('navbarsaller.php');
+require_once '../conn.php';
 require_once '../admin/check_permission.php';
+require_once('views/navbar.php');
 //session_start();
 $status = $_SESSION['sale_login'];
 $stmt = $conn->prepare('SELECT user_username FROM user WHERE user_id = :user_id');
@@ -117,34 +117,39 @@ $title = 'ลงคอร์ส';
  //include_once 'navbarsaller.php';
 
 ?>
+
 <head>
 
-<!-- bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Upload Product</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Product</title>
 </head>
+
 <body>
-    
+
     <div class="container my-5">
         <!-- แสดง errors -->
         <?php if (!empty($errors)) : ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?php foreach ($errors as $error) : ?>
-                    <p><?php
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php foreach ($errors as $error) : ?>
+            <p><?php
                        
                         echo $error ?></p>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <?php endforeach; ?>
-            </div>
-            <!--  -->
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <?php endforeach; ?>
+        </div>
+        <!--  -->
         <?php endif; ?>
         <!-- แสดงว่า insert สำเร็จ -->
         <?php if (!empty($message)) : ?>
-            <?php echo '<script>
+        <?php echo '<script>
             Swal.fire({
                 title: "' . $message . '",
                 icon: "success"
@@ -157,26 +162,30 @@ $title = 'ลงคอร์ส';
                 <label for="formFile" class="form-label">อัพโหลดไฟล์ภาพสำหรับปก</label>
                 <input class="form-control" type="file" id="formFile" name="image">
             </div>
-            
+
             <div class="mb-3">
                 <label for="" class="form-label">ชื่อบทเรียน</label>
                 <input type="text" class="form-control" id="" value="<?php echo $course_name; ?>" name="course_name">
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">ชื่อผู้ขาย</label>
-                <input type="text" class="form-control" id="" value="<?php echo $user_name['user_username']; ?>" name="user_name">
+                <input type="text" class="form-control" id="" value="<?php echo $user_name['user_username']; ?>"
+                    name="user_name">
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">ราคา</label>
-                <input type="number" class="form-control" id="" min=0 name="course_price" value="<?php echo $course_price; ?>"></input>
+                <input type="number" class="form-control" id="" min=0 name="course_price"
+                    value="<?php echo $course_price; ?>"></input>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">รายละเอียดของบทเรียน</label>
-                <textarea class="form-control" id="" rows="3" name="course_detail"><?php echo $course_detail; ?></textarea>
+                <textarea class="form-control" id="" rows="3"
+                    name="course_detail"><?php echo $course_detail; ?></textarea>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">ลิ้งตัวอย่างวีดีโอ</label>
-                <textarea class="form-control" id="" rows="3" name="course_example"><?php echo $course_example; ?></textarea>
+                <textarea class="form-control" id="" rows="3"
+                    name="course_example"><?php echo $course_example; ?></textarea>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">ประเภทของบทเรียน</label>

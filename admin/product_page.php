@@ -14,19 +14,32 @@
     include_once 'views/partials/navbar.php';
 ?>
 
+<?php
+    function sub($string, $length = 100, $append = '...') {
+        $truncated = mb_substr($string, 0, $length, 'UTF-8');
+        $stringLength = mb_strlen($string, 'UTF-8');
+    
+        if ($stringLength > $length) {
+            $truncated .= $append;
+        }
+    
+        return $truncated;
+    }
+?>
+
 <body>
     <div class="container">
         <div class="row">
             <?php foreach($course as $c): ?>
             <div class="col-md-4">
-                <div class="card mt-5">
+                <div class="card mt-5" style="height: 500px">
                     <img src="../img/course_img/<?php echo $c['course_img'] ?>" class="card-img-top"
                         style="height: 300px;">
                     <div class=" card-body">
                         <h5 class="card-title"><?php echo $c['course_name'] ?></h5>
-                        <p class="card-text"><?php echo $c['course_detail'] ?></p>
+                        <p class="card-text"><?php echo sub($c['course_detail'], 200)?></p>
                         <a href="show_all_product.php?id=<?php echo $c['course_id']?>"
-                            class="btn btn-primary">กดเพื่อดู</a>
+                            class="btn btn-primary ">กดเพื่อดู</a>
                     </div>
                 </div>
             </div>

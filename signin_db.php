@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    require_once 'conn.php';
+    require_once('conn.php');
 
     if(isset($_POST['signin'])){
        $user_username = $_POST['user_username'];
@@ -33,7 +33,7 @@
                                 header("location: admin/main_admin.php");
                             }elseif($row['status_id'] == 2){
                                 $_SESSION['sale_login'] = $row['user_id'];
-                                header("location: saller/sale.php");
+                                header("location: seller/sale.php");
                             }elseif($row['status_id'] == 3){
                                 $_SESSION['user_login'] = $row['user_id'];
                                 header("location: index.php");

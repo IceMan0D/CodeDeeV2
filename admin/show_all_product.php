@@ -25,7 +25,23 @@
                 <h6>ผู้จัดทำ : <?php echo $all_course['user_username']?></h6>
             </div>
             <div class="col-md-4">
-                <img src="../img/course_img/<?php echo $all_course['course_img']?>" alt="">
+                <img src="../img/course_img/<?php echo $all_course['course_img']?>" alt="" class="img-fluid">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    เกี่ยวกับ
+                </h2>
+                <?php echo $all_course['description']?>
+            </div>
+            <div class="col-md-12">
+                <h2>ความต้องการ</h2>
+                <?php echo $all_course['requirements']?>
+            </div>
+            <div class="col-md-12">
+                <h2>เหมาะกับใคร</h2>
+                <?php echo $all_course['suitable_for']?>
             </div>
         </div>
     </div>

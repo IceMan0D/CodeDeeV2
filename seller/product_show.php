@@ -1,8 +1,7 @@
 <?php
-require_once('../conn.php');
-require_once('headsale.php');
-
-require_once('navbarsaller.php');
+require_once '../conn.php';
+require_once '../admin/check_permission.php';
+require_once('views/navbar.php');
 $perpage = 9;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $perpage;
@@ -23,29 +22,29 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="container">
             <div class="row">
                 <?php foreach ($result as $row) {  ?>
-                    <div class="col-lg-4">
-                        <div class="card card-top m-3" style="width: 18rem;">
-                            <div class="showproduct ">
-                                <img src="../img/course_img/?php echo $row['course_img']; ?>" class="img-fluid">
-                            </div>
-                            <div>
-                                <p class="title"><?php echo $row['course_name']; ?></p>
-                                <p class=""><?php echo $row['course_detail']; ?></p>
-                                <p class=""><?php echo $row['course_price']; ?></p>
-                                
-                                <form action="../order.php" method="post">
-                           <input type="hidden" name="course_id" value="<?= $course['course_id'] ?>">
-                           <button type="submit" class="btn btn-success">Add to Cart</button>
-                           </form>
-                            </div>
+                <div class="col-lg-4">
+                    <div class="card card-top m-3" style="width: 18rem;">
+                        <div class="showproduct ">
+                            <img src="../img/course_img/?php echo $row['course_img']; ?>" class="img-fluid">
+                        </div>
+                        <div>
+                            <p class="title"><?php echo $row['course_name']; ?></p>
+                            <p class=""><?php echo $row['course_detail']; ?></p>
+                            <p class=""><?php echo $row['course_price']; ?></p>
+
+                            <form action="../order.php" method="post">
+                                <input type="hidden" name="course_id" value="<?= $course['course_id'] ?>">
+                                <button type="submit" class="btn btn-success">Add to Cart</button>
+                            </form>
                         </div>
                     </div>
+                </div>
                 <?php } ?>
             </div>
         </div>
     </header>
 
-    
+
     <div class='container d-flex justify-content-between'>
         <?php
         $stmt = $conn->prepare('SELECT COUNT(*) as count FROM course');
@@ -65,5 +64,3 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
-
-
