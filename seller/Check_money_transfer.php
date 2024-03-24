@@ -2,11 +2,13 @@
 session_start();
 require_once "../conn.php";
 $user_id = '';
+$row2 = '';
 if (isset($_SESSION['user_login'])) {
     $user_id = $_SESSION['user_login'];
-    $stmt = $conn->query("SELECT * FROM user WHERE user_id = $user_id");
-    $stmt->execute();
-    $row2 = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->query("SELECT * FROM user INNER JOIN seller ON user.user_id = seller.user_id INNER JOIN course ON course.user_username = user.user_username WHERE user.user_id = '$user_id'");
+    $row2 = $stmt->fetch();
+
+    
 }
 
 // ตรวจสอบสถานะการเข้าสู่ระบบของผู้ใช้ (ในที่นี้เป็นสำหรับผู้ขาย)
@@ -17,22 +19,6 @@ if (isset($_SESSION['user_login'])) {
 // }
 
 // ตรวจสอบว่ามีการส่งข้อมูลการโอนเงินเข้ามาหรือไม่
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm_payment'])) {
-    $user_id = $_POST['user_id'];
-    $course_id = $_POST['course_id'];
-
-    // อัพเดตสถานะการชำระเงินของคอร์สเป็น "ชำระเงินเรียบร้อย"
-    $sql_update = "UPDATE sale SET payment_status_id = 3 WHERE user_id = :user_id AND course_id = :course_id";
-    $stmt = $conn->prepare($sql_update);
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->bindParam(':course_id', $course_id);
-    $stmt->execute();
-
-    // สามารถเพิ่มการแจ้งเตือนหรือกระทำเพิ่มเติมได้ตามความเหมาะสม เช่น ส่งอีเมลหรือการแจ้งเตือนผ่านแอปพลิเคชัน
-    // หรือทำการ redirect ไปยังหน้าอื่นที่เหมาะสมหลังจากทำการยืนยันการชำระเงิน
-    header("Location: transactions.php"); // ตัวอย่างการ redirect ไปยังหน้า transactions.php
-    exit;
-}
 ?>
 
 <!DOCTYPE html>
