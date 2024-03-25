@@ -1,6 +1,13 @@
 <?php session_start();
 include 'conn.php';?>
 
+<?php 
+    $sql = "SELECT * FROM user WHERE status_id = 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $mentor = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,15 +56,18 @@ include 'conn.php';?>
     <!-- mentor -->
     <div class="container mentor my-5">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+
+        <?php foreach ($mentor as $i) :?>
             <div class="col px-5 mb-5">
                 <div class="mentor-card ">
                     <img src="images/webdev.jpg" alt="" class="w-100 rounded-3 d-block mx-auto mb-3">
-                    <h3>Mentor Name</h3>
+                    <h3><?php echo $i['user_fullname'] ?></h3>
                     <a href="" class="rounded-5 btn fw-bold">Mentor</a>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, quibusdam.</p>
+                    <p><?php echo $i['detail'] ?></p>
                     <img src="icon/github.png" alt="" height="30px">
                 </div>
             </div>
+        <?php endforeach; ?>
 
             
             <div class="col px-5">

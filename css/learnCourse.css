@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.desc{
+    border-bottom: 1px solid grey;
+    border-right: 1px solid grey;
+    margin: 0px !important;
+    padding: 40px;
+    width: 100% !important;
+
+    p{
+        padding: 0px;
+        margin: 0;
+    }
+}
+
+.section{
+    padding: 20px 0px 20px 20px;
+    border-bottom: 1px solid #d1d7dc;
+    border-top: 1px solid #d1d7dc;
+    width: 100%;
+}
+
+.episode {
+    border: none;
+    border-radius: 0px;
+    background-color:#dadbdc !important;
+    
+}
+
+.dropdown-menu{
+    position: static !important;
+    transform: none !important;
+}

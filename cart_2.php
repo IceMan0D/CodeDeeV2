@@ -62,7 +62,7 @@ $subtotal = 0;
                             //         $subtotal = $qty * $price;
                             //         $sumprice += $subtotal;
 
-                            $stmt = $conn->prepare('SELECT basket.basket_id, course.course_name, course.course_price, course.course_detail  
+                            $stmt = $conn->prepare('SELECT basket.basket_id, course.course_name, course.course_price, course.course_detail, course.course_img 
                                                     FROM course
                                                     INNER JOIN basket ON course.course_id = basket.course_id
                                                     WHERE user_id = :user_id');
@@ -86,7 +86,7 @@ $subtotal = 0;
                                 <div class="col-xl-6">
                                     <div class="me-lg-5">
                                         <div class="d-flex">
-                                            <img src="https://assets.justinmind.com/wp-content/uploads/2018/11/Lorem-Ipsum-alternatives-768x492.png"
+                                            <img src="img/course_img/<?php echo $r['course_img'] ?>"
                                                 class="border rounded me-3" style="width: 96px; height: 96px;" />
                                             <div class="">
                                                 <a href="#" class="nav-link"><?= $r['course_name'] ?></a>

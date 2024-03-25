@@ -1,21 +1,40 @@
 <?php
 session_start();
 require_once 'conn.php';
+//pagination how many u want
+$per_page = 9;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $per_page;
+///end
 
-$course_type = '';
-
-$sql = 'SELECT * FROM course INNER JOIN type ON course.type_id = type.type_id';
+$sql = 'SELECT * FROM course INNER JOIN type ON course.type_id = type.type_id ';
 
 if (isset($_GET['course_type']) && $_GET['course_type'] !== 'all') {
     $course_type = $_GET['course_type'];
     $sql .= ' WHERE course.type_id = :type';
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':type', $course_type);
-} else {
-    $stmt = $conn->prepare($sql);
 }
+
+// Count total number of records
+$stmt_count = $conn->prepare($sql);
+if (isset($course_type)) {
+    $stmt_count->bindParam(':type', $course_type);
+}
+$stmt_count->execute();
+$total_records = $stmt_count->rowCount();
+
+//calculate total pages
+$total_pages = ceil($total_records / $per_page);
+
+
+$sql .= ' LIMIT :per_page OFFSET :offset';
+$stmt = $conn->prepare($sql);
+//end calculate pages
+if (isset($course_type)) {
+    $stmt->bindParam(':type', $course_type);
+}
+$stmt->bindParam(':per_page', $per_page, PDO::PARAM_INT);
+$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
-$count = $stmt->rowCount();
 $course = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -56,29 +75,30 @@ $course = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h2 class="container mt-5 ">ค้นหาหลักสูตร</h2>
 
     <div class="filter-container mt-4 mb-5 container">
-        <a href="product.php?course_type=1" class="btn border border-1 p-3 <?php if ($_GET['course_type'] == 1) {
-                                                                                echo 'active';
-                                                                            } ?>">💻 Web Deverloper</a>
-        <a href="product.php?course_type=2" class="btn border border-1 p-3 <?php if ($_GET['course_type'] == 2) {
-                                                                                echo 'active';
-                                                                            } ?>">📱 Mobile Deverloper</a>
-        <a href="product.php?course_type=3" class="btn border border-1 p-3 <?php if ($_GET['course_type'] == 3) {
-                                                                                echo 'active';
-                                                                            } ?>">👾 Game Deverloper</a>
-        <a href="product.php?course_type=4" class="btn border border-1 p-3 <?php if ($_GET['course_type'] == 4) {
-                                                                                echo 'active';
-                                                                            } ?>">💾 UX/UI Design</a>
-        <a href="product.php?course_type=5" class="btn border border-1 p-3 <?php if ($_GET['course_type'] == 5) {
-                                                                                echo 'active';
-                                                                            } ?>">💾 Free Course</a>
-        <a href="product.php?course_type=all" class="btn border border-1 p-3 <?php if ($_GET['course_type'] == 'all') {
+        <a href="product.php?course_type=all" class="btn border border-1 p-3 <?php if (isset($_GET['course_type']) && $_GET['course_type'] == 'all') {
                                                                                     echo 'active';
                                                                                 } ?>">💾 ทั้งหมด</a>
+        <a href="product.php?course_type=1" class="btn border border-1 p-3 <?php if (isset($_GET['course_type']) && $_GET['course_type'] == 1) {
+                                                                                echo 'active';
+                                                                            } ?>">💻 Web Deverloper</a>
+        <a href="product.php?course_type=2" class="btn border border-1 p-3 <?php if (isset($_GET['course_type']) && $_GET['course_type'] == 2) {
+                                                                                echo 'active';
+                                                                            } ?>">📱 Mobile Deverloper</a>
+        <a href="product.php?course_type=3" class="btn border border-1 p-3 <?php if (isset($_GET['course_type']) && $_GET['course_type'] == 3) {
+                                                                                echo 'active';
+                                                                            } ?>">👾 Game Deverloper</a>
+        <a href="product.php?course_type=4" class="btn border border-1 p-3 <?php if (isset($_GET['course_type']) && $_GET['course_type'] == 4) {
+                                                                                echo 'active';
+                                                                            } ?>">💾 UX/UI Design</a>
+        <a href="product.php?course_type=5" class="btn border border-1 p-3 <?php if (isset($_GET['course_type']) && $_GET['course_type'] == 5) {
+                                                                                echo 'active';
+                                                                            } ?>">💾 Free Course</a>
+
     </div>
 
     <div class="container">
         <h3>ค้นหารายการ</h3>
-        <h5>มีรายการที่ตรงกัน <?php echo $count ?> รายการ</h5>
+        <h5>มีรายการที่ตรงกัน <?php echo $total_records ?> รายการ</h5>
     </div>
 
     <div class="container-fluid">
@@ -100,8 +120,8 @@ $course = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <span class="green box"></span>
                             </div>
                         </div>
-                        <div class="card__content ">
-                            <a href="course_detail.php?course_id=<?php echo $i['course_id'] ?>"
+                        <div class="card__content">
+                            <a href="courses.php?course_id=<?php echo $i['course_id'] ?>"
                                 class="position-absolute w-100 h-100 top-0 left-0"></a>
                             <img src="img/course_img/<?php echo $i['course_img'] ?>" alt="" class="w-100"
                                 style="height: 180px;">
@@ -131,6 +151,21 @@ $course = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <?php endforeach; ?>
 
+
+
+            </div>
+            <!-- pagination -->
+            <div class="container mt-3 d-flex justify-content-center mt-5">
+                <ul class="pagination ">
+                    <?php if (isset($_GET['course_type'])) { $type = $_GET['course_type']; }?>
+
+                    <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                    <li class="page-item <?php echo $page === $i ? 'active' : ''; ?>">
+                        <a class="page-link"
+                            href="?page=<?php echo $i ?>&course_type=<?php echo $type?>"><?php echo $i; ?></a>
+                    </li>
+                    <?php endfor; ?>
+                </ul>
             </div>
         </div>
     </div>

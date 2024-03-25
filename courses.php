@@ -1,181 +1,193 @@
-<?php 
-  session_start();
-  require_once 'conn.php';
+<?php
+session_start();
+require_once 'conn.php';
 
-  if(isset($_GET['course_id'])){
-    $courseId = $_GET['course_id'];
-    $sql = "SELECT * FROM course WHERE course_id = :courseId";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':courseId', $courseId);
-  }else{
-    header('Location: index.php');
-  }
-  
-  $stmt->execute();
-  $course = $stmt->fetch(PDO::FETCH_ASSOC);
+if (isset($_GET['course_id'])) {
+  $courseId = $_GET['course_id'];
+  $sql = "SELECT * FROM course WHERE course_id = :courseId";
+  $stmt = $conn->prepare($sql);
+  $stmt->bindParam(':courseId', $courseId);
+} else {
+  header('Location: index.php');
+}
+
+$stmt->execute();
+$course = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Courses</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
 
-  <!-- bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
-  <!-- bootstarp icon -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- bootstarp icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <!-- css -->
-  <link rel="stylesheet" href="css/course.css">
-  <link rel="stylesheet" href="css/navbar.css">
+    <!-- css -->
+    <link rel="stylesheet" href="css/course1.css">
+    <link rel="stylesheet" href="css/navbar.css">
 
 
-  <!-- google font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-  <?php include "navbar.php"?>
+    <?php include "navbar.php" ?>
 
-  <div class="container-fluid top-container p-5">
-    <div class="container pt-5 pb-3">
-      <div class="row">
-      <div class="col left">
-        <h1 id="courseName" ><?php echo $course['course_name']?></h1>
-        <h2 class="my-4"><?php echo $course['description']?></h2>
-        <ul>
-          <li>หลักสูตร 100% ออนไลน์ ลงมือทำโปรเจคจริงๆ</li>
-          <li>Mentor และ Career Coach ตัวต่อตัว</li>
-          <li>สำเร็จการศึกษาในระยะเวลา 3-6 เดือน</li>
-        </ul>
-        <div class="button-content d-flex gap-3 pt-3">
-          <a href="" class="btn btn-dark rounded-5 py-3 px-5">สมัครเรียนเลยทันที</a>
-          <a href="" class="btn btn-light rounded-5 py-3 px-5">Download หลักสูตร</a>
-        </div>
-      </div>
-      <div class="col right">
-        <div>
-          <!-- <p id="menter-short">Nanthawat Nurod Full-Stack Development จาก PSU Surat</p> -->
-          <img src="images/fullStack.png" alt="" class="h-100">
-        </div>
-      </div>
-      </div>
-      
-
-    </div>
-  </div>
-
-  <!-- course-descirption -->
-  <div class="container-fluid course-dsc my-5 py-3">
-    <div class="container bg-white border border-success border-2 rounded-4">
-      <h1 class="text-success mt-5 ms-5">สายงาน Full-Stack Developer</h1>
-        <div class="row py-3 px-5">
-          <div class="col-12 d-flex flex-column justify-content-center text-center px-5 " id="sec1">
-            <p class="text-start py-3"><?php echo $course['course_detail']?></p>
-          </div>
-          <div class="col border text-center py-3 border-2 border-top-0 border-bottom-0 border-start-0 d-flex flex-column justify-content-center" id="sec2">
-            <p class="text-center">ใน Full-Stack Development Bootcamp นี้คุณจะได้</p>
-            <ul>
-              <li>เขียนโค้ดในภาษาที่ใช้กันอย่างแพร่หลายมากที่สุดในโลก</li>
-              <li>ทำความเข้าใจทฤษฎีการพัฒนาซอฟต์แวร์ และเครื่องมือต่างๆ</li>
-              <li>ทดสอบความรู้ของคุณโปรเจคที่เตรียมคุณให้พร้อมสำหรับงาน</li>
-            </ul>
-          
-          </div>
-
-          <div class="col d-flex flex-column justify-content-center align-items-center text-center" id="sec3">
-            <h3>สร้างเว็บและแอปพลิเคชันแบบมืออาชีพไปกับเรา</h3>
-            <a href="" class="btn btn-dark">สมัครวันนี้</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="servise-content container my-5 ">
-        <div class="row text-center">
-          <div class="col">
-            <img src="icon/thai.png" alt="" width="60px" height="60px">
-            <h5>บทเรียนภาษาไทย</h5>
-            <p>สอนเข้าใจง่าย กระชับ และมีบทเรียนให้ทดสอบ</p>
-          </div>
-          <div class="col">
-            <img src="icon/ux.png" alt="" width="60px" height="60px">
-            <h5>เรียนได้ทุกที่ ทุกเวลา</h5>
-            <p>คอร์สเรียนมีความยืดหยุ่นเรียนที่ไหนก็ได้</p>
-          </div>
-          <div class="col">
-            <img src="icon/project.png" alt="" width="60px" height="60px">
-            <h5>Project-Based-Learning</h5>
-            <p>โปรเจคมากมายให้ท้าทายฝีมือ</p>
-          </div>
-          <div class="col">
-            <img src="icon/help.png" alt="" width="60px" height="60px">
-            <h5>พร้อมช่วยเหลือสำหรับผู้เริ่มต้น</h5>
-            <p>คอยซับพอร์ตและช่วยเหลือสำหรับผู้เริ่มต้นเรียน</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-
-  <div class="container-fluid assure-container px-5 py-3" >
-    <div class="row p-5">
-      <div class="col left fs-5 p-5 rounded-4">
-        <h1 class="highlight text-center mb-4">CodeDee</h1>
-        <p>รับประกันเงินคืน 100% หากคุณไม่ได้งานด้านเทคโลโลีภายใน 6 เดือน หลังสำเร็จการลงทะเบียนเรียน</p>
-        <p>ข้อกำหนดรับประกันเงินคืน : </p>
-        <ul>
-          <li>หลักสูตร 100% ออนไลน์ ลงมือทำโปรเจคจริงๆ</li>
-          <li>Mentor และ Career Coach ตัวต่อตัว</li>
-          <li>สำเร็จการศึกษาในระยะเวลา 3-6 เดือน</li>
-        </ul>
-      </div>
-      <div class="col">
-        <div id="card " class="card1 h-100 d-flex flex-column ">
-          <div class="content my-auto w-100">
-            <div class="card-body w-75 mx-auto ">
-              <div class="code-container float-animation border border-white">
-                <span class="line"><span class="code-comment">// Código de ejemplo</span></span>
-                <span class="line"><span class="code-keyword">function</span> <span class="code-function">example</span>()</span>
-                <span class="line">{</span>
-                <span class="line indent"><span class="code-keyword">let</span> <span class="code-variable">message</span> = <span class="code-string">"Hello, World!"</span>;</span>
-                <span class="line indent"><span class="code-built-in">console</span>.<span class="code-method">log</span>(<span class="code-variable">message</span>);</span>
-                <span class="line">}</span>
-              </div>
+    <div class="container-fluid top-container p-5">
+        <div class="container pt-5 pb-3">
+            <div class="row flex-column-reverse flex-md-row">
+                <div class="col left">
+                    <h1 id="courseName"><?php echo $course['course_name'] ?></h1>
+                    <h2 class="my-4  fw-light fs-4" style="max-height: 150px; overflow:hidden;">
+                        <?php echo $course['description'] ?></h2>
+                    <ul>
+                        <li>หลักสูตร 100% ออนไลน์ ลงมือทำโปรเจคจริงๆ</li>
+                        <li>Mentor และ Career Coach ตัวต่อตัว</li>
+                        <li>สำเร็จการศึกษาในระยะเวลา 3-6 เดือน</li>
+                    </ul>
+                    <div class="button-content d-flex gap-3 pt-3">
+                        <a href="" class="btn btn-dark rounded-5 py-3 px-5">สมัครเรียนเลยทันที</a>
+                        <a href="" class="btn btn-light rounded-5 py-3 px-5">Download หลักสูตร</a>
+                    </div>
+                </div>
+                <div class="col right">
+                    <div>
+                        <!-- <p id="menter-short">Nanthawat Nurod Full-Stack Development จาก PSU Surat</p> -->
+                        <img src="img/course_img/<?php echo $course['course_img'] ?>" alt=""
+                            class="h-100 w-100 mb-5 mb-md-0">
+                    </div>
+                </div>
             </div>
-          </div>
+
+
         </div>
-      </div>
     </div>
 
-    <div class="contact-box container">
-      <div class="row">
-        <div class="col-4 p-0">
-          <img src="images/webdev.jpg" alt="" class="h-100 w-100">
+    <!-- course-descirption -->
+    <div class="container-fluid course-dsc my-5 py-3">
+        <div class="container bg-white border border-success border-2 rounded-4">
+            <h1 class="text-success mt-5 ms-5">สายงาน Programmer ไปพร้อมกับพวกเรา</h1>
+            <div class="row py-3 px-5">
+                <div class="col-12 d-flex flex-column justify-content-center text-center px-5 " id="sec1">
+                    <p class="text-start py-3"><?php echo $course['course_detail'] ?></p>
+                </div>
+                <div class="col border text-center py-3 border-0 border-md-2 border-top-0 border-bottom-0 border-start-0 d-flex flex-column justify-content-center"
+                    id="sec2">
+                    <p class="text-center">ใน Full-Stack Development Bootcamp นี้คุณจะได้</p>
+                    <ul>
+                        <li>เขียนโค้ดในภาษาที่ใช้กันอย่างแพร่หลายมากที่สุดในโลก</li>
+                        <li>ทำความเข้าใจทฤษฎีการพัฒนาซอฟต์แวร์ และเครื่องมือต่างๆ</li>
+                        <li>ทดสอบความรู้ของคุณโปรเจคที่เตรียมคุณให้พร้อมสำหรับงาน</li>
+                    </ul>
+
+                </div>
+
+                <div class="col d-flex flex-column justify-content-center align-items-center text-center py-3"
+                    id="sec3">
+                    <h3>สร้างเว็บและแอปพลิเคชันแบบมืออาชีพไปกับเรา</h3>
+                    <a href="" class="btn btn-dark">สมัครวันนี้</a>
+                </div>
+            </div>
         </div>
-        <div class="col-8 px-5 d-flex flex-column justify-content-center align-items-start">
-          <h3 class="fw-bold text-success">พูดคุยและสอบถามเพิ่มเติม</h3>
-          <p>รู้ข้อมูลเพิ่มเติมเกี่ยวกับทางเลือกทางการชำระเงิน หลักสูตรของเรา และตอบคำถามที่คุณต้องการอยากทราบเพิ่มเติม</p>
-          <a href="" class="btn btn-dark mt-3 px-4 rounded-4  " >สอบถาม</a>
+
+        <div class="servise-content container my-5 ">
+            <div class="row row-cols-1 row-cols-md-4 text-center">
+                <div class="col">
+                    <img src="icon/thai.png" alt="" width="60px" height="60px">
+                    <h5>บทเรียนภาษาไทย</h5>
+                    <p>สอนเข้าใจง่าย กระชับ และมีบทเรียนให้ทดสอบ</p>
+                </div>
+                <div class="col">
+                    <img src="icon/ux.png" alt="" width="60px" height="60px">
+                    <h5>เรียนได้ทุกที่ ทุกเวลา</h5>
+                    <p>คอร์สเรียนมีความยืดหยุ่นเรียนที่ไหนก็ได้</p>
+                </div>
+                <div class="col">
+                    <img src="icon/project.png" alt="" width="60px" height="60px">
+                    <h5>Project-Based-Learning</h5>
+                    <p>โปรเจคมากมายให้ท้าทายฝีมือ</p>
+                </div>
+                <div class="col">
+                    <img src="icon/help.png" alt="" width="60px" height="60px">
+                    <h5>พร้อมช่วยเหลือสำหรับผู้เริ่มต้น</h5>
+                    <p>คอยซับพอร์ตและช่วยเหลือสำหรับผู้เริ่มต้นเรียน</p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <section style="height:250px;"></section>
 
-  <div class="items-container container my-5 pb-5">
-    <h1 class="mb-5">คอร์สเรียนแนะนำ</h1>
-    <div class="row gap-5">
+    <div class="container-fluid assure-container px-5 py-3">
+        <div class="row ">
+            <div class="col-12 col-md-6 left fs-5 p-5 rounded-4">
+                <h1 class="highlight text-center mb-4">CodeDee</h1>
+                <p>รับประกันเงินคืน 100% หากคุณไม่ได้งานด้านเทคโลโลีภายใน 6 เดือน หลังสำเร็จการลงทะเบียนเรียน</p>
+                <p>ข้อกำหนดรับประกันเงินคืน : </p>
+                <ul>
+                    <li>หลักสูตร 100% ออนไลน์ ลงมือทำโปรเจคจริงๆ</li>
+                    <li>Mentor และ Career Coach ตัวต่อตัว</li>
+                    <li>สำเร็จการศึกษาในระยะเวลา 3-6 เดือน</li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-6">
+                <div id="card " class="card1 h-100 d-flex flex-column ">
+                    <div class="content my-auto w-100">
+                        <div class="card-body w-75 mx-auto ">
+                            <div class="code-container float-animation border border-white">
+                                <span class="line"><span class="code-comment">// Código de ejemplo</span></span>
+                                <span class="line"><span class="code-keyword">function</span> <span
+                                        class="code-function">example</span>()</span>
+                                <span class="line">{</span>
+                                <span class="line indent"><span class="code-keyword">let</span> <span
+                                        class="code-variable">message</span> = <span class="code-string">"Hello,
+                                        World!"</span>;</span>
+                                <span class="line indent"><span class="code-built-in">console</span>.<span
+                                        class="code-method">log</span>(<span
+                                        class="code-variable">message</span>);</span>
+                                <span class="line">}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="contact-box container mt-3">
+            <div class="row ">
+                <div class="col-4 d-none d-md-block p-0">
+                    <img src="images/webdev.jpg" alt="" class="h-100 w-100">
+                </div>
+                <div class="col px-5 d-flex flex-column justify-content-center align-items-start p-4 p-md">
+                    <h3 class="fw-bold text-success">พูดคุยและสอบถามเพิ่มเติม</h3>
+                    <p>รู้ข้อมูลเพิ่มเติมเกี่ยวกับทางเลือกทางการชำระเงิน หลักสูตรของเรา
+                        และตอบคำถามที่คุณต้องการอยากทราบเพิ่มเติม</p>
+                    <a href="" class="btn btn-dark mt-1 mt-md-3  px-4 rounded-4  ">สอบถาม</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section style="height:250px;"></section>
+
+    <div class="items-container container my-5 pb-5">
+        <h1 class="mb-5">คอร์สเรียนแนะนำ</h1>
+        <!-- 
       <div class="itemCard col">
         <div class="card__wrapper">
             <div class="card___wrapper-acounts">
@@ -222,14 +234,76 @@
       <div class="card__subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod.</div>
       <div class="card__indicator"><span class="card__indicator-amount">135</span> Works / <span class="card__indicator-percentage">45%</span></div>
       <div class="card__progress"><progress max="100" value="40"></progress></div>
-    </div>
+    </div> -->
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 item_recommend">
+
+            <?php
+      $sql = "SELECT * FROM course";
+      $stmt = $conn->prepare($sql);
+      $stmt->execute();
+      $course = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $loop_count = 0 ;
+      ?>
+            <?php foreach ($course as $i) :
+        if ($loop_count >= 4) {
+        break;
+        }
+      ?>
+
+            <div class="col my-3">
+                <div class="card">
+                    <div class="tools">
+                        <div class="circle">
+                            <span class="red box"></span>
+                        </div>
+                        <div class="circle">
+                            <span class="yellow box"></span>
+                        </div>
+                        <div class="circle">
+                            <span class="green box"></span>
+                        </div>
+                    </div>
+                    <div class="card__content">
+                        <a href="courses.php?course_id=<?php echo $i['course_id'] ?>"
+                            class="position-absolute w-100 h-100 top-0 left-0"></a>
+                        <img src="img/course_img/<?php echo $i['course_img'] ?>" alt="" class="w-100"
+                            style="height: 180px;">
+                        <div class="product-detail p-3">
+                            <h4><?php echo $i['course_name'] ?></h4>
+                            <p class="course-desc"><?php echo $i['description'] ?></p>
+                            <div class="info d-flex justify-content-between">
+                                <p class="price text-danger my-auto"><?php echo $i['course_price'] ?>฿</p>
+                                <form action="order.php" method="post">
+                                    <input type="hidden" name="course_id" value="<?= $i['course_id'] ?>">
+                                    <button class="CartBtn">
+                                        <span class="IconContainer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                                fill="rgb(17, 17, 17)" class="cart">
+                                                <path
+                                                    d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                        <p class="text my-auto">Add to Cart</p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php $loop_count++; endforeach; ?>
+
+
+
+        </div>
 
     </div>
-  </div>
 
 
 
-  <?php include 'footer.php' ?>
+    <?php include 'footer.php' ?>
 
 
 </body>

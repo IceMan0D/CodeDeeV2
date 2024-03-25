@@ -30,7 +30,7 @@
                             echo 'est';
                             if($row['status_id'] == 1){
                                 $_SESSION['admin_login'] = $row['user_id'];
-                                header("location: admin/main_admin.php");
+                                header("location: admin2/index.php");
                             }elseif($row['status_id'] == 2){
                                 $_SESSION['sale_login'] = $row['user_id'];
                                 header("location: seller/showsale.php");

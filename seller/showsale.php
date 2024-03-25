@@ -27,6 +27,7 @@ $stmt_course->bindParam(':user_username', $user_id);
 $stmt_course->execute();
 $courses = $stmt_course->fetchAll(PDO::FETCH_ASSOC);
 
+
 // แสดงผลข้อมูลคอร์ส
 //var_dump($courses);
 ?>

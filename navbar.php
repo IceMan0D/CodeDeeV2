@@ -86,7 +86,7 @@
 
                     <button data-quantity="0" class="btn-cart me-3 d-none d-lg-block">
                         <a href="cart_2.php" class="btn-cart me-3 d-none d-lg-block">
-                            <svg class="icon-cart " viewBox="0 0 24.38 30.52" height="15" width="15"
+                            <svg class="icon-cart" viewBox="0 0 24.38 30.52" height="15" width="15"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <title>icon-cart</title>
                                 <path transform="translate(-3.62 -0.85)"
@@ -104,7 +104,10 @@
                     <?php } else { ?>
                     <a class="nav-link me-3" href="Login_User.php">เข้าสู่ระบบ</a>
                     <?php } ?>
-                    <a href="product.php?course_type=all"
+                    <a href="<?php if(isset($_SESSION['user_login'])){
+                        echo 'mylearn.php';
+                    }else{ echo 'product.php?course_type=all';
+                    }?>"
                         class="btn btn-primary text-white btn-gradient d-flex flex-column justify-content-center mt-3 mt-lg-0"
                         style="background: -webkit-linear-gradient(0deg,  #106eea, #f203ff); border:none;"><span>เริ่มเข้าสู่บทเรียน</span></a>
                 </div>

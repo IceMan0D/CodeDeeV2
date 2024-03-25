@@ -70,16 +70,11 @@ if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) 
     <title>Edit User Information</title>
 
     <!-- bootstrap -->
-<<<<<<< HEAD
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-=======
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
->>>>>>> 65e2a75b18df7a2f3119a0713556630bcdbf0993
 
     <!-- bootstarp icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -96,28 +91,15 @@ if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) 
 
     <div class="container user-info w-75 Regular shadow p-5 rounded-5" style="max-width: 600px;">
         <div class="row">
-<<<<<<< HEAD
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="col-12 img-content">
                     <img src="uploads/<?php echo $row['profile']; ?>" alt="profile" id="image-profile">
                 </div>
                 <div class="col-12 info-content mt-5">
-
                     <div class="box">
                         <label for="user_fullname">Full Name</label>
                         <input type="text" id="user_fullname" name="user_fullname"
                             value="<?php echo $row['user_fullname']; ?>" required><br>
-=======
-        <form method="post" action="" enctype="multipart/form-data">
-            <div class="col-12 img-content">
-            <img src="uploads/<?php echo $row['profile']; ?>" alt="profile" id="image-profile">
-            </div>
-            <div class="col-12 info-content mt-5">
-               
-                    <div class="box">
-                        <label for="user_fullname">Full Name</label>
-                        <input type="text" id="user_fullname" name="user_fullname" value="<?php echo $row['user_fullname']; ?>" required><br>
->>>>>>> 65e2a75b18df7a2f3119a0713556630bcdbf0993
                     </div>
 
                     <div class="box">
@@ -156,16 +138,14 @@ if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) 
                             <input type="submit" value="cancel" class="btn btn-white shadow-sm">
                             <input type="submit" name="update" value="Save Changes" class="btn btn-primary">
                         </div>
-<<<<<<< HEAD
+
+                    </div>
             </form>
-=======
-                </form>
-            </div>
->>>>>>> 65e2a75b18df7a2f3119a0713556630bcdbf0993
         </div>
     </div>
-
     </div>
+
+
 
     <?php include 'footer.php' ?>
 </body>

@@ -171,8 +171,7 @@ include 'conn.php';
           <div class="column-content" style="background-color: rgb(255, 238, 206);">
             <a href="" class="column-link"></a>
             <h1>💻 Starting Design Website</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia nostrum provident harum dolorem, quod
-              reprehenderit!</p>
+            <p>เริ่มต้นออกแบบเว็บไซต์ของคุณด้วยความคิดสร้างสรรค์และการวางแผนอย่างมีระบบ เพื่อสร้างประสบการณ์ที่น่าสนใจและมีประสิทธิภาพสำหรับผู้เยี่ยมชมของคุณ! 🌐✨</p>
           </div>
         </div>
         <div class="col-12 col-lg-4 course-column">
@@ -180,8 +179,7 @@ include 'conn.php';
           <div class="column-content text-white" style="background-color:#6a37ff;">
             <a href="" class="column-link"></a>
             <h1>👩‍💻 Became to FontEnd</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia nostrum provident harum dolorem, quod
-              reprehenderit!</p>
+            <p>เริ่มต้นเดินทางสู่การเป็น Frontend Developer ด้วยการเรียนรู้ HTML, CSS, และ JavaScript และเตรียมตัวให้พร้อมสร้างประสบการณ์การใช้งานที่น่าประทับใจบนเว็บไซต์! 🌟👩‍💻</p>
           </div>
         </div>
         <div class="col-12 col-lg-4 course-column">
@@ -189,8 +187,7 @@ include 'conn.php';
           <div class="column-content text-white" style="background-color: coral;">
             <a href="" class="column-link"></a>
             <h1>💾 Introduce SQL Database</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia nostrum provident harum dolorem, quod
-              reprehenderit!</p>
+            <p>สนุกกับการเรียนรู้ SQL Database และคำสั่งพื้นฐาน เริ่มต้นกันเถอะ! 💾🌟 เข้าร่วมการสร้างและจัดการข้อมูลอย่างมีประสิทธิภาพด้วย SQL!</p>
           </div>
         </div>
         <div class="col-12 col-lg-6 course-column">
@@ -198,8 +195,7 @@ include 'conn.php';
           <div class="column-content text-white" style="background-color: #2779e3;">
             <a href="" class="column-link"></a>
             <h1>🐳 Introduce Github for Deverloper</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia nostrum provident harum dolorem, quod
-              reprehenderit!</p>
+            <p>เข้าร่วมชุมชนนักพัฒนาโดยใช้ GitHub! รวบรวมโค้ด ทำงานร่วมกับทีม และติดตามการเปลี่ยนแปลงในโครงการได้อย่างสะดวกสบาย 🐳🚀</p>
           </div>
         </div>
         <div class="col-12 col-lg-6 course-column">
@@ -207,8 +203,7 @@ include 'conn.php';
           <div class="column-content" style="background-color: rgb(255, 221, 0);">
             <a href="" class="column-link"></a>
             <h1>👾 Starting Game Deverloper</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia nostrum provident harum dolorem, quod
-              reprehenderit!</p>
+            <p>เริ่มต้นเป็นนักพัฒนาเกมกับการเรียนรู้เครื่องมือและทักษะที่จำเป็น! ค้นพบโลกของการสร้างเกม และเริ่มต้นการสร้างประสบการณ์ที่น่าตื่นเต้นสำหรับผู้เล่น! 👾🎮</p>
           </div>
         </div>
       </div>
@@ -222,7 +217,7 @@ include 'conn.php';
         <div class="dsc-content d-flex flex-column align-items-center justify-content-center">
           <h1 class="text-center">หากคุณยังกังวลพวกเรา <br><span class="highlight">CodeDee</span><br> พร้อมจะให้คำแนะนำ</h1>
           <p>ก้าวสู่การเป็นโปรแกรมเมอร์ไปพร้อมกับพวกเราเลย</p>
-          <a href="" class="btn btn-warning my-3">ลงทะเบียน</a>
+          <a href="Login_User.php" class="btn btn-warning my-3">ลงทะเบียน</a>
         </div>
 
       </div>

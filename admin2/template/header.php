@@ -22,29 +22,33 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <!-- Custom styles for this page -->
-     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+        integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-</style>
+    </style>
 </head>
 
 <body id="page-top">
 
-<?php 
+    <?php 
 	session_start();
-	if ($_SESSION["admin_login"] ==Null) {
+	if ($_SESSION["admin_login"] == null) {
 		session_destroy();
   ?>
 
     <script>
-      alert('you must login first');
-      window.location.href="../login.php";
+    alert('you must login first');
+    window.location.href = "../login.php";
     </script>
 
-  <?php
+    <?php
 
   }
 ?>
@@ -76,7 +80,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-           
+
 
             <!-- Heading -->
             <div class="sidebar-heading">
@@ -103,8 +107,8 @@
             <div class="sidebar-heading">
                 อื่นๆ
             </div>
-             <!-- Nav Item - Tables -->
-             <li class="nav-item">
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
                 <a class="nav-link" href="finance.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>การเงิน</span></a>
@@ -117,7 +121,7 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-            
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -135,9 +139,9 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-                    
 
-                    
+
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -150,8 +154,8 @@
                                                 $total = $row['total'];
                                                 ?>
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle"  id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" id="alertsDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter"><?php echo $total;?> </span>
@@ -169,14 +173,16 @@
                                     $notify_detail = $row['notify_detail'];
                                 
                                 ?>
-                                <a class="dropdown-item d-flex align-items-center" onclick="return confirm('คุณแน่ใจที่จะลบข้อมูลหรือไม่? หากลบแล้วจะไม่สามารถกู้คืนมาได้อีก!!')" href="del_noti.php?id=<?php echo $notify_id;?>">
+                                <a class="dropdown-item d-flex align-items-center"
+                                    onclick="return confirm('คุณแน่ใจที่จะลบข้อมูลหรือไม่? หากลบแล้วจะไม่สามารถกู้คืนมาได้อีก!!')"
+                                    href="del_noti.php?id=<?php echo $notify_id;?>">
                                     <div>
                                         <span class="font-weight-bold"><?php echo $notify_topic;?> </span>
                                         <div class="small text-gray-500"><?php echo $notify_detail;?>
+                                        </div>
+
                                     </div>
-                                        
-                                    </div>
-                                    
+
                                 </a>
                                 <?php
                                 }
@@ -185,7 +191,7 @@
                         </li>
 
                         <!-- Nav Item - Messages -->
-                       
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <?php
@@ -199,19 +205,20 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION["status_name"];?> : <?php echo $_SESSION["user_fullname"];?></span>
-                                <img class="img-profile rounded-circle"
-                                    src="../images/profile/<?php echo $img;?> ">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo 'สถานะ Admin'?>
+                                    : <?php echo 'Nanthawat Nurot'?></span>
+                                <img class="img-profile rounded-circle" src="img/profile/nanthawat.jpg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class=" dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="profile.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="../../Login_User.php" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
