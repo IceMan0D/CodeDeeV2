@@ -1,4 +1,5 @@
-<?php require("connect_db.php");
+<?php 
+require("connect_db.php");
 ?>
 
 <!DOCTYPE html>
@@ -113,6 +114,11 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>การเงิน</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../admin/list_product.php">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>จัดการคอส</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -199,15 +205,22 @@
                             $rsud = $conn->query("select * from user where user_id = '$user_id'");
                             foreach($rsud as $row){
                                 $img = $row ['profile'];
+                                $user = $row['user_fullname'];
                             }
                         ?>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
+                            <!-- <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php //echo 'สถานะ Admin'?>
+                                    : <?php //echo 'Nanthawat Nurot'?></span>
+                                <img class="img-profile rounded-circle" src="img/profile/nanthawat.jpg">
+                            </a> -->
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo 'สถานะ Admin'?>
-                                    : <?php echo 'Nanthawat Nurot'?></span>
-                                <img class="img-profile rounded-circle" src="img/profile/nanthawat.jpg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">ผู้ดูแลระบบ
+                                    : <?php echo $user;?></span>
+                                <img class="img-profile rounded-circle" src="img/profile/profile-user.png">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class=" dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -217,7 +230,7 @@
                                     Profile
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="../../Login_User.php" data-toggle="modal"
+                                <a class="dropdown-item" href="../../Logout1.php" data-toggle="modal"
                                     data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
